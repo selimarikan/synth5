@@ -44,6 +44,7 @@ export default {
   }
 };
 
+import FrequencyCalculator from 'frequency-calculator';
 
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let oscList = [];
@@ -59,26 +60,42 @@ let cosineTerms = null;
 
 function createNoteTable() {
   let noteFreq = [];
-  for (let i = 0; i < 2; i++) {
+  // 2-dim array to keep [octave][note]
+  for (let i = 0; i < 7; i++) {
     noteFreq[i] = [];
   }
+  console.log(noteFreq)
+  for (let iOctave = 0; iOctave < 7; iOctave++) {
+      noteFreq[iOctave]["C"] = FrequencyCalculator.calculateFrequencyByNote('C', iOctave);
+      noteFreq[iOctave]["C#"] = FrequencyCalculator.calculateFrequencyByNote('CSharp', iOctave);
+      noteFreq[iOctave]["D"] = FrequencyCalculator.calculateFrequencyByNote('D', iOctave);
+      noteFreq[iOctave]["D#"] = FrequencyCalculator.calculateFrequencyByNote('DSharp', iOctave);
+      noteFreq[iOctave]["E"] = FrequencyCalculator.calculateFrequencyByNote('E', iOctave);
+      noteFreq[iOctave]["F"] = FrequencyCalculator.calculateFrequencyByNote('F', iOctave);
+      noteFreq[iOctave]["F#"] = FrequencyCalculator.calculateFrequencyByNote('FSharp', iOctave);
+      noteFreq[iOctave]["G"] = FrequencyCalculator.calculateFrequencyByNote('G', iOctave);
+      noteFreq[iOctave]["G#"] = FrequencyCalculator.calculateFrequencyByNote('GSharp', iOctave);
+      noteFreq[iOctave]["A"] = FrequencyCalculator.calculateFrequencyByNote('A', iOctave);
+      noteFreq[iOctave]["A#"] = FrequencyCalculator.calculateFrequencyByNote('ASharp', iOctave);
+      noteFreq[iOctave]["B"] = FrequencyCalculator.calculateFrequencyByNote('B', iOctave);
+  }
 
-  noteFreq[0]["A"] = 27.5;
-  noteFreq[0]["A#"] = 29.135235094880619;
-  noteFreq[0]["B"] = 30.867706328507756;
+//   noteFreq[0]["A"] = 27.5;
+//   noteFreq[0]["A#"] = 29.135235094880619;
+//   noteFreq[0]["B"] = 30.867706328507756;
 
-  noteFreq[1]["C"] = 32.703195662574829;
-  noteFreq[1]["C#"] = 34.647828872109012;
-  noteFreq[1]["D"] = 36.708095989675945;
-  noteFreq[1]["D#"] = 38.890872965260113;
-  noteFreq[1]["E"] = 41.203444614108741;
-  noteFreq[1]["F"] = 43.653528929125485;
-  noteFreq[1]["F#"] = 46.249302838954299;
-  noteFreq[1]["G"] = 48.999429497718661;
-  noteFreq[1]["G#"] = 51.913087197493142;
-  noteFreq[1]["A"] = 55.0;
-  noteFreq[1]["A#"] = 58.270470189761239;
-  noteFreq[1]["B"] = 561.735412657015513;
+//   noteFreq[1]["C"] = 32.703195662574829;
+//   noteFreq[1]["C#"] = 34.647828872109012;
+//   noteFreq[1]["D"] = 36.708095989675945;
+//   noteFreq[1]["D#"] = 38.890872965260113;
+//   noteFreq[1]["E"] = 41.203444614108741;
+//   noteFreq[1]["F"] = 43.653528929125485;
+//   noteFreq[1]["F#"] = 46.249302838954299;
+//   noteFreq[1]["G"] = 48.999429497718661;
+//   noteFreq[1]["G#"] = 51.913087197493142;
+//   noteFreq[1]["A"] = 55.0;
+//   noteFreq[1]["A#"] = 58.270470189761239;
+//   noteFreq[1]["B"] = 561.735412657015513;
 
   return noteFreq;
 }
