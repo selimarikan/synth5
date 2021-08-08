@@ -5,14 +5,11 @@
     <div class="settingsBar">
       <div class="left">
         <span>Volume: </span>
-        <input
-          type="range"
-          min="0.0"
-          max="1.0"
+        <input type="range" name="volume"
+          max="1.0" min="0.0" 
           step="0.01"
           value="0.5"
           list="volumes"
-          name="volume"
         />
         <datalist id="volumes">
           <option value="0.0" label="Mute"></option>
@@ -64,41 +61,25 @@ function createNoteTable() {
   for (let i = 0; i < 7; i++) {
     noteFreq[i] = [];
   }
-  console.log(noteFreq)
   for (let iOctave = 0; iOctave < 7; iOctave++) {
       noteFreq[iOctave]["C"] = FrequencyCalculator.calculateFrequencyByNote('C', iOctave);
-      noteFreq[iOctave]["C#"] = FrequencyCalculator.calculateFrequencyByNote('CSharp', iOctave);
+      noteFreq[iOctave]["C#"] = FrequencyCalculator.calculateFrequencyByNote('Csharp', iOctave);
       noteFreq[iOctave]["D"] = FrequencyCalculator.calculateFrequencyByNote('D', iOctave);
-      noteFreq[iOctave]["D#"] = FrequencyCalculator.calculateFrequencyByNote('DSharp', iOctave);
+      noteFreq[iOctave]["D#"] = FrequencyCalculator.calculateFrequencyByNote('Dsharp', iOctave);
       noteFreq[iOctave]["E"] = FrequencyCalculator.calculateFrequencyByNote('E', iOctave);
       noteFreq[iOctave]["F"] = FrequencyCalculator.calculateFrequencyByNote('F', iOctave);
-      noteFreq[iOctave]["F#"] = FrequencyCalculator.calculateFrequencyByNote('FSharp', iOctave);
+      noteFreq[iOctave]["F#"] = FrequencyCalculator.calculateFrequencyByNote('Fsharp', iOctave);
       noteFreq[iOctave]["G"] = FrequencyCalculator.calculateFrequencyByNote('G', iOctave);
-      noteFreq[iOctave]["G#"] = FrequencyCalculator.calculateFrequencyByNote('GSharp', iOctave);
+      noteFreq[iOctave]["G#"] = FrequencyCalculator.calculateFrequencyByNote('Gsharp', iOctave);
       noteFreq[iOctave]["A"] = FrequencyCalculator.calculateFrequencyByNote('A', iOctave);
-      noteFreq[iOctave]["A#"] = FrequencyCalculator.calculateFrequencyByNote('ASharp', iOctave);
+      noteFreq[iOctave]["A#"] = FrequencyCalculator.calculateFrequencyByNote('Asharp', iOctave);
       noteFreq[iOctave]["B"] = FrequencyCalculator.calculateFrequencyByNote('B', iOctave);
   }
 
-//   noteFreq[0]["A"] = 27.5;
-//   noteFreq[0]["A#"] = 29.135235094880619;
-//   noteFreq[0]["B"] = 30.867706328507756;
-
-//   noteFreq[1]["C"] = 32.703195662574829;
-//   noteFreq[1]["C#"] = 34.647828872109012;
-//   noteFreq[1]["D"] = 36.708095989675945;
-//   noteFreq[1]["D#"] = 38.890872965260113;
-//   noteFreq[1]["E"] = 41.203444614108741;
-//   noteFreq[1]["F"] = 43.653528929125485;
-//   noteFreq[1]["F#"] = 46.249302838954299;
-//   noteFreq[1]["G"] = 48.999429497718661;
-//   noteFreq[1]["G#"] = 51.913087197493142;
-//   noteFreq[1]["A"] = 55.0;
-//   noteFreq[1]["A#"] = 58.270470189761239;
-//   noteFreq[1]["B"] = 561.735412657015513;
 
   return noteFreq;
 }
+
 function setup() {
     keyboard = document.querySelector(".keyboard");
     wavePicker = document.querySelector("select[name='waveform']");
@@ -106,6 +87,7 @@ function setup() {
     console.log(volumeControl);
     noteFreq = createNoteTable();
 
+  console.log(noteFreq);
   volumeControl.addEventListener("change", changeVolume, false);
 
   mainGainNode = audioContext.createGain();
@@ -122,18 +104,17 @@ function setup() {
     octaveElem.className = "octave";
 
     keyList.forEach(function (key) {
-      if (key[0].length == 1) {
+      // if (key[0].length == 1) {
         octaveElem.appendChild(createKey(key[0], idx, key[1]));
-      }
+      // }
     });
 
     keyboard.appendChild(octaveElem);
   });
 
-  document
-    .querySelector("div[data-note='B'][data-octave='1']")
-    .scrollIntoView(false);
+  document.querySelector("div[data-note='B'][data-octave='1']").scrollIntoView(false);
 
+  // Set custom waveform
   sineTerms = new Float32Array([0, 0, 1, 0, 1]);
   cosineTerms = new Float32Array(sineTerms.length);
   customWaveform = audioContext.createPeriodicWave(cosineTerms, sineTerms);
@@ -143,6 +124,7 @@ function setup() {
   }
 }
 function createKey(note, octave, freq) {
+  // console.log("Creating note:" + note.toString() + " Octave: " + octave.toString() + " freq: " + freq.toString());
   let keyElement = document.createElement("div");
   let labelElement = document.createElement("div");
 
